@@ -9,7 +9,7 @@ const userSchema = new Schema(
     password: { type: String, required: true, minlength: 6, maxlength: 50 },
     role: {
       ref: "Role",
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
       enum: ["admin", "user", "employee", "manager"],
     },
