@@ -9,10 +9,14 @@
     "dev": "nodemon main.js"
   },
   "keywords": [
-    "E-commerce"
+    "E-commerce",
+    "MERN E-commerce",
+    "E-commerce API",
+    "Nodejs E-commerce API",
+    "Backend API E-commerce"
   ],
   "repository": {
-    "url": "https://github.com/abdi-aaqyaar/e-commerce-mern/tree/main/back-end"
+    "url": "https://github.com/abdi-aaqyaar/e-commerce-backend-api"
   },
   "author": "Abdi Zamed Mohamed",
   "license": "MIT",
