@@ -45,10 +45,8 @@ exports.register = async (req, res) => {
       password,
       // : hashedPassword,
     }).save();
-    const token = JWT.sign({ _id: newUser._id }, process.env.JWT_SECRET_KEY);
     res.json({
       user: { name: newUser.name, email: newUser.email, role: newUser.role },
-      token,
     });
   } catch (error) {
     res.status(500).send(error);

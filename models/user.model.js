@@ -8,9 +8,10 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true, minlength: 6, maxlength: 50 },
     role: {
+      ref: "Role",
       type: String,
       required: true,
-      enum: [process.env.USER_ACCESS_ROLE, process.env.ADMIN_ACCESS_ROLE],
+      enum: ["admin", "user", "employee", "manager"],
     },
   },
   { timestamps: true }
@@ -31,11 +32,7 @@ userSchema.methods.encryptPassword = function (password) {
 };
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  const unhashedPassword = await bcrypt.compareSync(
-    enteredPassword,
-    this.password
-  );
-  return unhashedPassword;
+  return await bcrypt.compareSync(enteredPassword, this.password);
 };
 
 module.exports = mongoose.model("User", userSchema);
