@@ -3,6 +3,9 @@ const Role = require("../models/roles.model");
 exports.create = async (req, res) => {
   try {
     const { name, permissions } = req.body;
+    const isExist = await Role.findOne(name).exec();
+    if (isExist)
+      return res.status(500).send({ error: "Category Already Exist" });
     const role = await new Role({ name, permissions }).save();
     res.json({ data: role, message: "Role created successfully" });
   } catch (error) {
@@ -30,9 +33,9 @@ exports.readOne = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const { name, permissions } = req.body.role;
+    const { name, permissions, _id } = req.body.role;
     const role = await Role.findOneAndUpdate(
-      { _id: req.params.id },
+      { _id },
       { name, permissions },
       { new: true }
     ).exec();

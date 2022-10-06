@@ -10,7 +10,7 @@ const {
 } = require("../controllers/roles.controller");
 
 router.post("/create-role", create);
-router.put("/update-role/:id", update);
+router.put("/update-role", update);
 router.get("/roles", list);
 router.get("/roles/:id", readOne);
 router.delete("/delete-role/:id", removeOne);
