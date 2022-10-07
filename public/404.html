@@ -4,21 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-commerce Backend API</title>
+    <title>404 Page Not Found</title>
     <style>
-      #container {
+      html {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+      }
+      #notFound {
         font-family: "Courier New", Courier, monospace;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         height: 100vh;
+
+        background-color: #f1f1f1;
       }
       h1 {
         font-size: 2rem;
         font-weight: 600;
         margin-bottom: 1rem;
       }
+
       @media screen and (max-width: 768px) {
         h1 {
           font-size: 1rem;
@@ -26,9 +34,10 @@
       }
     </style>
   </head>
+
   <body>
-    <div id="container">
-      <h1>E-commerce Backend API is in production mode</h1>
+    <div id="notFound">
+      <h1>* 404 - Page Not Found On The Server *</h1>
     </div>
   </body>
 </html>

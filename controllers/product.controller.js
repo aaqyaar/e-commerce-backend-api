@@ -1,7 +1,7 @@
 const Product = require("../models/product.model");
 
 // get all products
-exports.getAllProducts = async (req, res) => {
+exports.listAllProducts = async (req, res) => {
   try {
     const products = await Product.find().exec();
     res.json({ data: products });
@@ -11,7 +11,7 @@ exports.getAllProducts = async (req, res) => {
 };
 
 // get product by id
-exports.getProductById = async (req, res) => {
+exports.readOne = async (req, res) => {
   try {
     const { _id } = req.params;
     const product = await Product.findById(_id).exec();
@@ -25,9 +25,9 @@ exports.getProductById = async (req, res) => {
 };
 
 // get products by pagination
-exports.getProducts = async (req, res) => {
+exports.list = async (req, res) => {
   try {
-    const { page } = req.query;
+    const page = req.query.page || 0;
     const limit = 10;
     const products = await Product.find()
       .skip(page * limit)
@@ -66,7 +66,7 @@ exports.createOrUpdateProduct = async (req, res) => {
 };
 
 // delete product
-exports.deleteProduct = async (req, res) => {
+exports.removeOne = async (req, res) => {
   try {
     const { _id } = req.params;
     const product = await Product.findByIdAndDelete(_id).exec();
@@ -80,7 +80,7 @@ exports.deleteProduct = async (req, res) => {
 };
 
 // delete Many products
-exports.deleteManyProducts = async (req, res) => {
+exports.removeMany = async (req, res) => {
   try {
     const { ids } = req.params;
     const products = await Product.deleteMany({ ids });
@@ -94,7 +94,7 @@ exports.deleteManyProducts = async (req, res) => {
 };
 
 // filter products by category
-exports.filterProductsByCategory = async (req, res) => {
+exports.filterByCategory = async (req, res) => {
   try {
     const { category } = req.params;
     const products = await Product.find({ category }).exec();

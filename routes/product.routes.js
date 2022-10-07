@@ -1,18 +1,18 @@
 const router = require("express").Router();
 const {
-  getProducts,
-  getProductById,
-  getAllProducts,
+  list,
+  readOne,
+  listAllProducts,
   createOrUpdateProduct,
-  deleteProduct,
-  deleteManyProducts,
+  removeOne,
+  removeMany,
 } = require("../controllers/product.controller");
 
-router.get("/products-all", getAllProducts);
-router.get("/products", getProducts);
-router.get("/products/:_id", getProductById);
+router.get("/products-all", listAllProducts);
+router.get("/products", list);
+router.get("/products/:_id", readOne);
 router.post("/products", createOrUpdateProduct);
-router.delete("/products/:_id", deleteProduct);
-router.post("/delete-many-products", deleteManyProducts);
+router.delete("/products/:_id", removeOne);
+router.post("/delete-many-products", removeMany);
 
 module.exports = router;

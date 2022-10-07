@@ -19,8 +19,6 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
   try {
     const subCategory = await SubCategory.find({}).exec();
-    if (!subCategory)
-      return res.status(400).send({ msg: "Sub Categories are empty" });
     res.json({ data: subCategory });
   } catch (error) {
     res.status(500).send(error);

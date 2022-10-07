@@ -24,8 +24,12 @@ readdirSync("./routes").map((file) => {
   server.use("/api", route);
 });
 
-server.use("/", (req, res) => {
+server.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+server.all("*", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "public", "404.html"));
 });
 
 module.exports = server;
