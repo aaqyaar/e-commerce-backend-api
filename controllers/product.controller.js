@@ -3,7 +3,7 @@ const Product = require("../models/product.model");
 // get all products
 exports.listAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().exec();
+    const products = await Product.find().populate("category").exec();
     res.json({ data: products });
   } catch (error) {
     res.status(500).send(error);
@@ -14,7 +14,7 @@ exports.listAllProducts = async (req, res) => {
 exports.readOne = async (req, res) => {
   try {
     const { _id } = req.params;
-    const product = await Product.findById(_id).exec();
+    const product = await Product.findById(_id).populate("category").exec();
     if (!product) {
       return res.status(400).json({ message: "Product not found" });
     }
@@ -32,6 +32,7 @@ exports.list = async (req, res) => {
     const products = await Product.find()
       .skip(page * limit)
       .limit(limit)
+      .populate("category")
       .sort({ createdAt: -1 })
       .exec();
     const count = await Product.countDocuments();

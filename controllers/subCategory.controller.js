@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
 
 exports.list = async (req, res) => {
   try {
-    const subCategory = await SubCategory.find({}).exec();
+    const subCategory = await SubCategory.find({}).populate("category").exec();
     res.json({ data: subCategory });
   } catch (error) {
     res.status(500).send(error);
@@ -29,7 +29,9 @@ exports.readOne = async (req, res) => {
   try {
     const subCategory = await SubCategory.findOne({
       _id: req.params._id,
-    }).exec();
+    })
+      .populate("category")
+      .exec();
     res.json({ data: subCategory });
   } catch (error) {
     res.status(500).send(error);

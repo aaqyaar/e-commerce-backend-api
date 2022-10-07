@@ -11,7 +11,6 @@ const userSchema = new Schema(
       ref: "Role",
       type: Schema.Types.ObjectId,
       required: true,
-      enum: ["admin", "user", "employee", "manager"],
     },
   },
   { timestamps: true }
