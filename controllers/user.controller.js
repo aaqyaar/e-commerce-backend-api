@@ -4,16 +4,14 @@ const { JWT } = require("../config/JWT");
 // login user
 exports.login = async (req, res) => {
   try {
-    const { email, password, username } = req.body.user;
-    let user = null;
-    if (!email) {
-      user = await User.findOne({ username }).exec();
-    } else if (!username) {
-      user = await User.findOne({ email }).exec();
-    } else {
-      return res.status(401).send({ error: "Username or Email Not Provided" });
-    }
+    const { emailOrUsername, password } = req.body.user;
 
+    let user = null;
+    if (emailOrUsername.includes("@") && emailOrUsername.endsWith(".com")) {
+      user = await User.findOne({ email: emailOrUsername });
+    } else {
+      user = await User.findOne({ username: emailOrUsername });
+    }
     if (!user) {
       return res.status(400).send({ error: "User not found" });
     }
