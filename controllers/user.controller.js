@@ -15,10 +15,10 @@ exports.login = async (req, res) => {
     }
 
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(400).send({ error: "User not found" });
     }
     if (user.isBlocked) {
-      return res.status(400).json({ message: "User is blocked" });
+      return res.status(400).send({ error: "User is blocked" });
     }
     if (user && (await user.matchPassword(password))) {
       const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
         token,
       });
     } else {
-      return res.status(400).json({ message: "Invalid password" });
+      return res.status(400).send({ error: "Invalid password" });
     }
   } catch (error) {
     res.status(500).send(error);
