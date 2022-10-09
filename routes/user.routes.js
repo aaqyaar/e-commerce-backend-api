@@ -14,7 +14,7 @@ router.post("/login", login);
 router.post("/register", register);
 router.post("/logout", isAuth, logout);
 router.put("/users/:_id", isAuth, updateUser);
-router.get("/users", getAllUsers);
+router.get("/users", isAuth, getAllUsers);
 router.get("/users/:_id", isAuth, getUserById);
 router.delete("/users/:_id", isAuth, deleteUser);
 
