@@ -17,7 +17,9 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-
+    if (user.isBlocked) {
+      return res.status(400).json({ message: "User is blocked" });
+    }
     if (user && (await user.matchPassword(password))) {
       const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
       res.json({
@@ -39,7 +41,7 @@ exports.login = async (req, res) => {
 // register user
 exports.register = async (req, res) => {
   try {
-    const { name, username, email, password, role } = req.body.user;
+    const { name, username, email, password, role, isBlocked } = req.body.user;
     const user = await User.findOne({ email }).exec();
     // console.log(user);
     if (user) {
@@ -52,6 +54,7 @@ exports.register = async (req, res) => {
       role,
       password,
       username,
+      isBlocked,
       // : hashedPassword,
     }).save();
     res.json({
@@ -60,6 +63,7 @@ exports.register = async (req, res) => {
         email: newUser.email,
         role: newUser.role,
         username: newUser.username,
+        isBlocked: newUser.isBlocked,
       },
     });
   } catch (error) {

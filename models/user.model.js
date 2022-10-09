@@ -8,6 +8,7 @@ const userSchema = new Schema(
     username: { type: String, minlength: 3, maxlength: 50 },
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true, minlength: 6, maxlength: 50 },
+    isBlocked: { type: Boolean, required: false },
     role: {
       ref: "Role",
       type: Schema.Types.ObjectId,
