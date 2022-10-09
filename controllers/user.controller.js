@@ -5,9 +5,10 @@ const { JWT } = require("../config/JWT");
 exports.login = async (req, res) => {
   try {
     const { emailOrUsername, password } = req.body.user;
+    const email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     let user = null;
-    if (emailOrUsername.includes("@") && emailOrUsername.endsWith(".com")) {
+    if (email_regex.test(emailOrUsername) === true) {
       user = await User.findOne({ email: emailOrUsername });
     } else {
       user = await User.findOne({ username: emailOrUsername });
@@ -40,6 +41,7 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, username, email, password, role, isBlocked } = req.body.user;
+
     const user = await User.findOne({ email }).exec();
     // console.log(user);
     if (user) {
