@@ -4,8 +4,16 @@ const { JWT } = require("../config/JWT");
 // login user
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body.user;
-    const user = await User.findOne({ email });
+    const { email, password, username } = req.body.user;
+    let user = null;
+    if (!email) {
+      user = await User.findOne({ username }).exec();
+    } else if (!username) {
+      user = await User.findOne({ email }).exec();
+    } else {
+      return res.status(401).send({ error: "Username or Email Not Provided" });
+    }
+
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
@@ -31,7 +39,7 @@ exports.login = async (req, res) => {
 // register user
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body.user;
+    const { name, username, email, password, role } = req.body.user;
     const user = await User.findOne({ email }).exec();
     // console.log(user);
     if (user) {
@@ -43,10 +51,16 @@ exports.register = async (req, res) => {
       email,
       role,
       password,
+      username,
       // : hashedPassword,
     }).save();
     res.json({
-      user: { name: newUser.name, email: newUser.email, role: newUser.role },
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        username: newUser.username,
+      },
     });
   } catch (error) {
     res.status(500).send(error);

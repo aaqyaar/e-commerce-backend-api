@@ -4,13 +4,14 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    name: { type: String, required: true, minlength: 3, maxlength: 50 },
+    name: { type: String, minlength: 3, maxlength: 50 },
+    username: { type: String, minlength: 3, maxlength: 50 },
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true, minlength: 6, maxlength: 50 },
     role: {
       ref: "Role",
       type: Schema.Types.ObjectId,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
